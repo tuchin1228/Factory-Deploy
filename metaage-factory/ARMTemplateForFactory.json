@@ -560,6 +560,36 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/SQLtoSQLfeatCDC')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CDC_Trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "CDC_Pipeline_Demo",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 8,
+						"startTime": "2023-02-16T10:41:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/CDC_Pipeline_Demo')]"
+			]
 		}
 	]
 }
