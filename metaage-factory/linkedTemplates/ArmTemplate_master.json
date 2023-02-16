@@ -1,0 +1,63 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory 名稱",
+			"defaultValue": "metaage-factory"
+		},
+		"AzureSQL_connectionString": {
+			"type": "secureString",
+			"metadata": "'AzureSQL' 的 'connectionString' 安全字串"
+		},
+		"AzureStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "'AzureStorage' 的 'accountKey' 安全字串"
+		},
+		"AzureStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storage0216.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "包含連結 ARM 範本的儲存體帳戶 URI"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "包含連結 ARM 範本的儲存體帳戶 SAS 權杖"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "metaage-factory_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureSQL_connectionString": {
+						"value": "[parameters('AzureSQL_connectionString')]"
+					},
+					"AzureStorage_accountKey": {
+						"value": "[parameters('AzureStorage_accountKey')]"
+					},
+					"AzureStorage_properties_typeProperties_url": {
+						"value": "[parameters('AzureStorage_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
