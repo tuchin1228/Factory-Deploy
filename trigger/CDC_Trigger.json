@@ -3,13 +3,20 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipelines": [],
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CDC_Pipeline_Demo",
+					"type": "PipelineReference"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 10,
-				"startTime": "2023-02-16T02:43:00",
+				"startTime": "2023-02-16T02:44:00",
 				"timeZone": "Taipei Standard Time"
 			}
 		}
