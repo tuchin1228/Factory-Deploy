@@ -216,6 +216,350 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSQL')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSVtoSQL')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "StudentCSV",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlNewStudentTable",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          ID as string,",
+						"          {School DfE Number} as string,",
+						"          {First Name} as string,",
+						"          {Last Name} as string,",
+						"          Username as string,",
+						"          Password as string,",
+						"          {State ID} as string,",
+						"          {Secondary Email} as string,",
+						"          {Student Number} as string,",
+						"          {Middle Name} as string,",
+						"          Grade as string,",
+						"          Status as string,",
+						"          Birthdate as string,",
+						"          {Graduation Year} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     enableCdc: true,",
+						"     mode: 'read',",
+						"     skipInitialLoad: false) ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          studentID as integer,",
+						"          Name as string,",
+						"          Grade as string,",
+						"          Birthday as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['SET IDENTITY_INSERT [dbo].[newstudent] ON'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          studentID = ID,",
+						"          Name = Username,",
+						"          Grade,",
+						"          Birthday = Birthdate",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/StudentCSV')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlNewStudentTable')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSVtoSQLwithFilter')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "StudentCSV",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlStudentTable",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID as string,",
+						"          {School DfE Number} as string,",
+						"          {First Name} as string,",
+						"          {Last Name} as string,",
+						"          Username as string,",
+						"          Password as string,",
+						"          {State ID} as string,",
+						"          {Secondary Email} as string,",
+						"          {Student Number} as string,",
+						"          {Middle Name} as string,",
+						"          Grade as string,",
+						"          Status as string,",
+						"          Birthdate as string,",
+						"          {Graduation Year} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 select(mapColumn(",
+						"          ID,",
+						"          Username,",
+						"          Grade,",
+						"          Birthdate",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 filter(greater(toInteger(Grade),10)) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          studentID as integer,",
+						"          Name as string,",
+						"          Grade as string,",
+						"          Birthday as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          studentID = ID,",
+						"          Name = Username,",
+						"          Grade,",
+						"          Birthday = Birthdate",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/StudentCSV')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlStudentTable')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLtoSQLfeatCDC')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlStudentTable",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlNewStudentTable",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          studentID as integer,",
+						"          Name as string,",
+						"          Grade as string,",
+						"          Birthday as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     enableNativeCdc: true,",
+						"     netChanges: true,",
+						"     skipInitialLoad: false,",
+						"     waterMarkColumn: 'studentID',",
+						"     isolationLevel: 'NONE',",
+						"     format: 'table') ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          studentID as integer,",
+						"          Name as string,",
+						"          Grade as string,",
+						"          Birthday as string",
+						"     ),",
+						"     deletable:true,",
+						"     insertable:true,",
+						"     updateable:true,",
+						"     upsertable:true,",
+						"     keys:['studentID'],",
+						"     format: 'table',",
+						"     preSQLs:['SET IDENTITY_INSERT [dbo].[newstudent] ON'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          studentID,",
+						"          Name,",
+						"          Grade,",
+						"          Birthday",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlStudentTable')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlNewStudentTable')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSVtoSQLbyDataflowPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "CSVtoSQLwithFilter",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-02-14T06:27:19Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/CSVtoSQLwithFilter')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CDC_Pipeline_Demo')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "SQLtoSQLfeatCDC",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine",
+							"continuationSettings": {
+								"customizedCheckpointKey": "53eac3b0-6c25-4067-9547-bffbf175e7eb"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/SQLtoSQLfeatCDC')]"
+			]
 		}
 	]
 }
