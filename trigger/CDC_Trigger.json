@@ -1,0 +1,17 @@
+{
+	"name": "CDC_Trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 8,
+				"startTime": "2023-02-16T10:38:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
