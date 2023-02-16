@@ -1,0 +1,74 @@
+{
+	"name": "CSVtoSQL",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "StudentCSV",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlNewStudentTable",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          ID as string,",
+				"          {School DfE Number} as string,",
+				"          {First Name} as string,",
+				"          {Last Name} as string,",
+				"          Username as string,",
+				"          Password as string,",
+				"          {State ID} as string,",
+				"          {Secondary Email} as string,",
+				"          {Student Number} as string,",
+				"          {Middle Name} as string,",
+				"          Grade as string,",
+				"          Status as string,",
+				"          Birthdate as string,",
+				"          {Graduation Year} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false) ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          studentID as integer,",
+				"          Name as string,",
+				"          Grade as string,",
+				"          Birthday as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['SET IDENTITY_INSERT [dbo].[newstudent] ON'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          studentID = ID,",
+				"          Name = Username,",
+				"          Grade,",
+				"          Birthday = Birthdate",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
