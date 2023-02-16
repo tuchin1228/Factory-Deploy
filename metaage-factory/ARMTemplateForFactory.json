@@ -581,9 +581,9 @@
 				"typeProperties": {
 					"recurrence": {
 						"frequency": "Minute",
-						"interval": 8,
-						"startTime": "2023-02-16T10:41:00Z",
-						"timeZone": "UTC"
+						"interval": 10,
+						"startTime": "2023-02-16T02:44:00",
+						"timeZone": "Taipei Standard Time"
 					}
 				}
 			},
