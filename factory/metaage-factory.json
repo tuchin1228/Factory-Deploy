@@ -1,0 +1,9 @@
+{
+	"name": "metaage-factory",
+	"location": "japaneast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ba656f8b-9924-4e4c-8992-f356668205fa",
+		"tenantId": "47e5620c-e82e-4815-9c85-d363d7b4df58"
+	}
+}
