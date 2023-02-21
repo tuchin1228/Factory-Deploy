@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "'AzureStorage' 的 'accountKey' 安全字串"
 		},
+		"DockerSQL_connectionString": {
+			"type": "secureString",
+			"metadata": "'DockerSQL' 的 'connectionString' 安全字串"
+		},
 		"AzureStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage0216.dfs.core.windows.net/"
@@ -51,6 +55,9 @@
 					},
 					"AzureStorage_accountKey": {
 						"value": "[parameters('AzureStorage_accountKey')]"
+					},
+					"DockerSQL_connectionString": {
+						"value": "[parameters('DockerSQL_connectionString')]"
 					},
 					"AzureStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureStorage_properties_typeProperties_url')]"

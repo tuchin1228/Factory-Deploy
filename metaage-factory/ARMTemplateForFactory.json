@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "'AzureStorage' 的 'accountKey' 安全字串"
 		},
+		"DockerSQL_connectionString": {
+			"type": "secureString",
+			"metadata": "'DockerSQL' 的 'connectionString' 安全字串"
+		},
 		"AzureStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage0216.dfs.core.windows.net/"
@@ -201,6 +205,45 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DockerSqlStudentTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DockerSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "studentID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Name",
+						"type": "nchar"
+					},
+					{
+						"name": "Grade",
+						"type": "nchar"
+					},
+					{
+						"name": "Birthday",
+						"type": "nchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Student"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DockerSQL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/StudentCSV')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -311,6 +354,19 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureStorage_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DockerSQL')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('DockerSQL_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -590,6 +646,28 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlStudentTable')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlNewStudentTable')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "source1"
+						}
+					],
+					"sinks": [],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false) ~> source1"
+					]
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
