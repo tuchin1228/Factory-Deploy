@@ -1,0 +1,34 @@
+{
+	"name": "DockerSqlStudentTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DockerSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "studentID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Name",
+				"type": "nchar"
+			},
+			{
+				"name": "Grade",
+				"type": "nchar"
+			},
+			{
+				"name": "Birthday",
+				"type": "nchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Student"
+		}
+	}
+}
