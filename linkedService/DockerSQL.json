@@ -1,0 +1,12 @@
+{
+	"name": "DockerSQL",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=114.35.65.114;initial catalog=demodb;user id=sa",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDJCQkQ2RUVGLTUxNzQtNDU2Ri04QUFCLTQ5RDQyOTUyOTJCNV84Nzc4YWU1OC1iODRjLTQ4MTItOWU0Yy1jMTNjZTMxYWNkY2MiDQp9"
+		}
+	}
+}
