@@ -48,6 +48,7 @@
 				"     insertable:true,",
 				"     updateable:true,",
 				"     upsertable:true,",
+				"     keys:['studentID'],",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
