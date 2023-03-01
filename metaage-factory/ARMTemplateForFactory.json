@@ -277,27 +277,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzurePostgreSqlStudentTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzurePostgreSql",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "public",
-					"table": "student"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzurePostgreSql')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlNewStudentTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1043,23 +1022,6 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlStudentTable')]",
 				"[concat(variables('factoryId'), '/datasets/DockerSqlStudentTable')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQLserverTo')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [],
-					"sinks": [],
-					"transformations": [],
-					"scriptLines": [
-						""
-					]
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }
