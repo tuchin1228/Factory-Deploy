@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "'AzureMySQL' 的 'connectionString' 安全字串"
 		},
+		"AzurePostgreSql_connectionString": {
+			"type": "secureString",
+			"metadata": "'AzurePostgreSql' 的 'connectionString' 安全字串"
+		},
 		"AzureSQL_connectionString": {
 			"type": "secureString",
 			"metadata": "'AzureSQL' 的 'connectionString' 安全字串"
@@ -56,6 +60,9 @@
 					},
 					"AzureMySQL_connectionString": {
 						"value": "[parameters('AzureMySQL_connectionString')]"
+					},
+					"AzurePostgreSql_connectionString": {
+						"value": "[parameters('AzurePostgreSql_connectionString')]"
 					},
 					"AzureSQL_connectionString": {
 						"value": "[parameters('AzureSQL_connectionString')]"
