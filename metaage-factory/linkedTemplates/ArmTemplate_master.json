@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "'DockerSQL' 的 'connectionString' 安全字串"
 		},
+		"AzureMySQL_connectionString": {
+			"type": "secureString",
+			"metadata": "'AzureMySQL' 的 'connectionString' 安全字串"
+		},
 		"AzureStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage0216.dfs.core.windows.net/"
@@ -58,6 +62,9 @@
 					},
 					"DockerSQL_connectionString": {
 						"value": "[parameters('DockerSQL_connectionString')]"
+					},
+					"AzureMySQL_connectionString": {
+						"value": "[parameters('AzureMySQL_connectionString')]"
 					},
 					"AzureStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureStorage_properties_typeProperties_url')]"

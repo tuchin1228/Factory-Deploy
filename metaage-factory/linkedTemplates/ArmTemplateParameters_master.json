@@ -14,6 +14,9 @@
 		"DockerSQL_connectionString": {
 			"value": ""
 		},
+		"AzureMySQL_connectionString": {
+			"value": ""
+		},
 		"AzureStorage_properties_typeProperties_url": {
 			"value": "https://storage0216.dfs.core.windows.net/"
 		},
