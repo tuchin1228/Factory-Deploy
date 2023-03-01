@@ -8,9 +8,6 @@
 		"AzureMySQL_connectionString": {
 			"value": ""
 		},
-		"AzurePostgreSql_connectionString": {
-			"value": ""
-		},
 		"AzureSQL_connectionString": {
 			"value": ""
 		},
@@ -18,6 +15,9 @@
 			"value": ""
 		},
 		"DockerSQL_connectionString": {
+			"value": ""
+		},
+		"AzurePostgreSql_connectionString": {
 			"value": ""
 		},
 		"AzureStorage_properties_typeProperties_url": {
