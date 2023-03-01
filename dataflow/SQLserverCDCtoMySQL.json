@@ -50,7 +50,6 @@
 				"     upsertable:true,",
 				"     keys:['studentID'],",
 				"     format: 'table',",
-				"     preSQLs:['SET IDENTITY_INSERT newstudent ON'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
