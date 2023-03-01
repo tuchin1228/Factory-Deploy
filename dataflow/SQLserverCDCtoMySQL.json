@@ -48,6 +48,7 @@
 				"     insertable:true,",
 				"     updateable:true,",
 				"     upsertable:true,",
+				"     keys:['studentID'],",
 				"     format: 'table',",
 				"     preSQLs:['SET IDENTITY_INSERT newstudent ON'],",
 				"     skipDuplicateMapInputs: true,",
