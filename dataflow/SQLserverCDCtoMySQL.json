@@ -31,6 +31,9 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     enableNativeCdc: true,",
+				"     netChanges: true,",
+				"     skipInitialLoad: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
@@ -41,13 +44,19 @@
 				"          Grade as string,",
 				"          Birthday as string",
 				"     ),",
-				"     deletable:false,",
+				"     deletable:true,",
 				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
+				"     updateable:true,",
+				"     upsertable:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          studentID,",
+				"          Name,",
+				"          Grade,",
+				"          Birthday",
+				"     )) ~> sink1"
 			]
 		}
 	}

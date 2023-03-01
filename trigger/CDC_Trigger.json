@@ -2,11 +2,17 @@
 	"name": "CDC_Trigger",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
 					"referenceName": "CDC_Pipeline_Demo",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline2",
 					"type": "PipelineReference"
 				}
 			}
@@ -16,7 +22,7 @@
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 10,
-				"startTime": "2023-02-16T02:45:00",
+				"startTime": "2023-03-01T11:43:00",
 				"timeZone": "Taipei Standard Time"
 			}
 		}
