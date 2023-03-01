@@ -544,13 +544,6 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline2",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -564,8 +557,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/CDC_Pipeline_Demo')]",
-				"[concat(variables('factoryId'), '/pipelines/pipeline2')]"
+				"[concat(variables('factoryId'), '/pipelines/CDC_Pipeline_Demo')]"
 			]
 		},
 		{
@@ -1005,7 +997,7 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 10,
-						"startTime": "2023-03-01T12:50:00Z",
+						"startTime": "2023-03-01T12:58:00Z",
 						"timeZone": "UTC"
 					}
 				}
