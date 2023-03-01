@@ -1,0 +1,41 @@
+{
+	"name": "AzurePostgreSqlStudentTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzurePostgreSql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzurePostgreSqlTable",
+		"schema": [
+			{
+				"name": "studentID",
+				"type": "integer",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "Name",
+				"type": "character",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "Grade",
+				"type": "character",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "Birthday",
+				"type": "character",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "public",
+			"table": "student"
+		}
+	}
+}
