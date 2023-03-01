@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "metaage-factory"
 		},
+		"AzureMySQL_connectionString": {
+			"value": ""
+		},
 		"AzureSQL_connectionString": {
 			"value": ""
 		},
@@ -12,9 +15,6 @@
 			"value": ""
 		},
 		"DockerSQL_connectionString": {
-			"value": ""
-		},
-		"AzureMySQL_connectionString": {
 			"value": ""
 		},
 		"AzureStorage_properties_typeProperties_url": {
