@@ -1,0 +1,15 @@
+{
+	"name": "MySqlStudentTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LocalMySQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`student`"
+		}
+	}
+}
