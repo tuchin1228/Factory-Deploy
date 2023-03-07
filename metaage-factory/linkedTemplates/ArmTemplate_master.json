@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "'AzureMySQL' 的 'connectionString' 安全字串"
 		},
+		"AzurePostgreSql_connectionString": {
+			"type": "secureString",
+			"metadata": "'AzurePostgreSql' 的 'connectionString' 安全字串"
+		},
 		"AzureSQL_connectionString": {
 			"type": "secureString",
 			"metadata": "'AzureSQL' 的 'connectionString' 安全字串"
@@ -23,9 +27,13 @@
 			"type": "secureString",
 			"metadata": "'DockerSQL' 的 'connectionString' 安全字串"
 		},
-		"AzurePostgreSql_connectionString": {
+		"LocalMySQL_connectionString": {
 			"type": "secureString",
-			"metadata": "'AzurePostgreSql' 的 'connectionString' 安全字串"
+			"metadata": "'LocalMySQL' 的 'connectionString' 安全字串"
+		},
+		"LocalOracle_connectionString": {
+			"type": "secureString",
+			"metadata": "'LocalOracle' 的 'connectionString' 安全字串"
 		},
 		"AzureStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -61,6 +69,9 @@
 					"AzureMySQL_connectionString": {
 						"value": "[parameters('AzureMySQL_connectionString')]"
 					},
+					"AzurePostgreSql_connectionString": {
+						"value": "[parameters('AzurePostgreSql_connectionString')]"
+					},
 					"AzureSQL_connectionString": {
 						"value": "[parameters('AzureSQL_connectionString')]"
 					},
@@ -70,8 +81,11 @@
 					"DockerSQL_connectionString": {
 						"value": "[parameters('DockerSQL_connectionString')]"
 					},
-					"AzurePostgreSql_connectionString": {
-						"value": "[parameters('AzurePostgreSql_connectionString')]"
+					"LocalMySQL_connectionString": {
+						"value": "[parameters('LocalMySQL_connectionString')]"
+					},
+					"LocalOracle_connectionString": {
+						"value": "[parameters('LocalOracle_connectionString')]"
 					},
 					"AzureStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureStorage_properties_typeProperties_url')]"
