@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "'DockerSQL' 的 'connectionString' 安全字串"
 		},
+		"HomeOracle_connectionString": {
+			"type": "secureString",
+			"metadata": "'HomeOracle' 的 'connectionString' 安全字串"
+		},
 		"LocalMySQL_connectionString": {
 			"type": "secureString",
 			"metadata": "'LocalMySQL' 的 'connectionString' 安全字串"
@@ -80,6 +84,9 @@
 					},
 					"DockerSQL_connectionString": {
 						"value": "[parameters('DockerSQL_connectionString')]"
+					},
+					"HomeOracle_connectionString": {
+						"value": "[parameters('HomeOracle_connectionString')]"
 					},
 					"LocalMySQL_connectionString": {
 						"value": "[parameters('LocalMySQL_connectionString')]"

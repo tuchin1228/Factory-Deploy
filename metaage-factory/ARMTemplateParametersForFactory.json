@@ -20,6 +20,9 @@
 		"DockerSQL_connectionString": {
 			"value": ""
 		},
+		"HomeOracle_connectionString": {
+			"value": ""
+		},
 		"LocalMySQL_connectionString": {
 			"value": ""
 		},

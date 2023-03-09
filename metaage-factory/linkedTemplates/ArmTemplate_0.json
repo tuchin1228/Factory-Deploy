@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "'DockerSQL' 的 'connectionString' 安全字串"
 		},
+		"HomeOracle_connectionString": {
+			"type": "secureString",
+			"metadata": "'HomeOracle' 的 'connectionString' 安全字串"
+		},
 		"LocalMySQL_connectionString": {
 			"type": "secureString",
 			"metadata": "'LocalMySQL' 的 'connectionString' 安全字串"
@@ -109,6 +113,19 @@
 				"type": "SqlServer",
 				"typeProperties": {
 					"connectionString": "[parameters('DockerSQL_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HomeOracle')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('HomeOracle_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -365,6 +382,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LocalMySQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LocalOracle",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "APEX_040000",
+					"table": "APEX$_ACL"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LocalOracle')]"
 			]
 		},
 		{
@@ -763,149 +801,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSqlStudentTable')]",
 				"[concat(variables('factoryId'), '/datasets/AzurePostgreSqlStudentTable')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQLtoSQLfeatCDC')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlStudentTable",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlNewStudentTable",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          studentID as integer,",
-						"          Name as string,",
-						"          Grade as string,",
-						"          Birthday as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     enableNativeCdc: true,",
-						"     netChanges: true,",
-						"     skipInitialLoad: false,",
-						"     waterMarkColumn: 'studentID',",
-						"     isolationLevel: 'NONE',",
-						"     format: 'table') ~> source1",
-						"source1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          studentID as integer,",
-						"          Name as string,",
-						"          Grade as string,",
-						"          Birthday as string",
-						"     ),",
-						"     deletable:true,",
-						"     insertable:true,",
-						"     updateable:true,",
-						"     upsertable:true,",
-						"     keys:['studentID'],",
-						"     format: 'table',",
-						"     preSQLs:['SET IDENTITY_INSERT [dbo].[newstudent] ON'],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          studentID,",
-						"          Name,",
-						"          Grade,",
-						"          Birthday",
-						"     )) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlStudentTable')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlNewStudentTable')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlStudentTable",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DockerSqlStudentTable",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          studentID as integer,",
-						"          Name as string,",
-						"          Grade as string,",
-						"          Birthday as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     enableNativeCdc: true,",
-						"     netChanges: true,",
-						"     skipInitialLoad: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          studentID as integer,",
-						"          Name as string,",
-						"          Grade as string,",
-						"          Birthday as string",
-						"     ),",
-						"     deletable:true,",
-						"     insertable:true,",
-						"     updateable:true,",
-						"     upsertable:true,",
-						"     keys:['studentID'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     mapColumn(",
-						"          studentID,",
-						"          Name,",
-						"          Grade,",
-						"          Birthday",
-						"     )) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlStudentTable')]",
-				"[concat(variables('factoryId'), '/datasets/DockerSqlStudentTable')]"
 			]
 		}
 	]
